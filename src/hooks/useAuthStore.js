@@ -33,12 +33,30 @@ export const useAuthStore = () => {
         }
 
     }
+
+
+    const startRegister = async({ name, password, email }) => {
+        dispatch( onChecking());    
+        try {
+            const { data } = await calendarApi.post('/auth/new',{ name, password, email});
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('token-init-date', new Date().getTime() );
+            dispatch( onLogin({ name: data.name, uid: data.uid }))
+        } catch (error) {
+            dispatch( onLogout(error.response.data?.msg || '--'));
+            setTimeout(() => {
+                dispatch( clearErrorMessage() );
+            }, 10);
+        }
+
+    }
     return {
         //* Properties
         status,
         user,
         errorMessage,
         //* Methods
-        startLogin
+        startLogin,
+        startRegister
     }
 }
