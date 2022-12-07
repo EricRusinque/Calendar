@@ -69,7 +69,7 @@ export const CalendarPage = () => {
         />    
         <CalendarModal/>
         <FabAddNew/>
-        <FabDelete/>
+        <FabDelete/>  
         
       </>
     )
